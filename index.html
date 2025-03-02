@@ -24,28 +24,49 @@
         </section>
     </main>
 
-    <!-- Подключение Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js"></script>
+    <!-- Подключение и инициализация Firebase -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+      import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+      import { getAuth } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
-    <!-- Инициализация Firebase -->
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCwkkASOyg-mpTtDenKWWpGn4mALQw9do4",
-            authDomain: "rentall-7cee4.firebaseapp.com",
-            projectId: "rentall-7cee4",
-            storageBucket: "rentall-7cee4.firebasestorage.app",
-            messagingSenderId: "789645270072",
-            appId: "1:789645270072:web:98941fe4892fa8cf5e5acd",
-            measurementId: "G-FLTXL7KCP4"
-        };
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore(); // Инициализация Firestore
-        const auth = firebase.auth(); // Инициализация аутентификации
+      const firebaseConfig = {
+        apiKey: "AIzaSyCwkkASOyg-mpTtDenKWWpGn4mALQw9do4",
+        authDomain: "rentall-7cee4.firebaseapp.com",
+        projectId: "rentall-7cee4",
+        storageBucket: "rentall-7cee4.firebasestorage.app",
+        messagingSenderId: "789645270072",
+        appId: "1:789645270072:web:98941fe4892fa8cf5e5acd",
+        measurementId: "G-FLTXL7KCP4"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      const auth = getAuth(app);
+
+      async function loadItems() {
+        try {
+          const querySnapshot = await getDocs(collection(db, "items"));
+          const itemsGrid = document.querySelector(".items-grid");
+          itemsGrid.innerHTML = ""; // Очистка контейнера
+
+          querySnapshot.forEach((doc) => {
+            const item = doc.data();
+            const itemElement = document.createElement("div");
+            itemElement.classList.add("item-card");
+            itemElement.innerHTML = `
+              <h3>${item.name}</h3>
+              <p>${item.description}</p>
+              <p>Цена: ${item.price} руб.</p>
+            `;
+            itemsGrid.appendChild(itemElement);
+          });
+        } catch (error) {
+          console.error("Ошибка загрузки данных:", error);
+        }
+      }
+
+      window.addEventListener("load", loadItems);
     </script>
-
-    <!-- Основной скрипт -->
-    <script src="script.js"></script>
 </body>
 </html>
