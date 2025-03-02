@@ -7,14 +7,14 @@ const loadItems = async () => {
         itemsGrid.innerHTML = ''; // Очищаем контейнер перед загрузкой
         querySnapshot.forEach(doc => {
             const item = doc.data();
-            console.log('Товар:', item); // Отладка
+            console.log('Товар:', item); // Проверьте структуру объекта item
             itemsGrid.innerHTML += `
                 <article class="item-card">
-                    <img src="${item.image}" alt="${item.title}" class="item-image">
+                    <img src="${item.image || 'https://via.placeholder.com/150'}" alt="${item.title || 'Без названия'}" class="item-image">
                     <div class="item-info">
-                        <h3>${item.title}</h3>
-                        <p class="price">${item.price} руб/день</p>
-                        <p>${item.description}</p>
+                        <h3>${item.title || 'Без названия'}</h3>
+                        <p class="price">${item.price || 'Цена не указана'} руб/день</p>
+                        <p>${item.description || 'Описание отсутствует'}</p>
                         <button class="btn btn-primary" onclick="rentItem('${doc.id}')">Арендовать</button>
                     </div>
                 </article>
