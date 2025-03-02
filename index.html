@@ -24,53 +24,27 @@
         </section>
     </main>
 
+    <!-- Подключение Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js"></script>
+
+    <!-- Инициализация Firebase -->
     <script>
         const firebaseConfig = {
-  apiKey: "AIzaSyCwkkASOyg-mpTtDenKWWpGn4mALQw9do4",
-  authDomain: "rentall-7cee4.firebaseapp.com",
-  projectId: "rentall-7cee4",
-  storageBucket: "rentall-7cee4.firebasestorage.app",
-  messagingSenderId: "789645270072",
-  appId: "1:789645270072:web:98941fe4892fa8cf5e5acd",
-  measurementId: "G-FLTXL7KCP4"
-};
-
+            apiKey: "ВАШ_API_KEY",
+            authDomain: "ВАШ_AUTH_DOMAIN",
+            projectId: "ВАШ_PROJECT_ID",
+            storageBucket: "ВАШ_STORAGE_BUCKET",
+            messagingSenderId: "ВАШ_MESSAGING_SENDER_ID",
+            appId: "ВАШ_APP_ID"
+        };
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-
-        const loadItems = async () => {
-            const itemsGrid = document.querySelector('.items-grid');
-            console.log('Загрузка данных...'); // Отладка
-            try {
-                const querySnapshot = await db.collection('items').get();
-                console.log('Документы:', querySnapshot.docs); // Отладка
-                itemsGrid.innerHTML = ''; // Очищаем контейнер перед загрузкой
-                querySnapshot.forEach(doc => {
-                    const item = doc.data();
-                    console.log('Товар:', item); // Отладка
-                    itemsGrid.innerHTML += `
-                        <article class="item-card">
-                            <img src="${item.image}" alt="${item.title}" class="item-image">
-                            <div class="item-info">
-                                <h3>${item.title}</h3>
-                                <p class="price">${item.price} руб/день</p>
-                                <p>${item.description}</p>
-                                <button class="btn btn-primary" onclick="rentItem('${doc.id}')">Арендовать</button>
-                            </div>
-                        </article>
-                    `;
-                });
-            } catch (error) {
-                console.error('Ошибка загрузки данных:', error); // Отладка
-            }
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('Страница загружена'); // Отладка
-            loadItems();
-        });
+        const auth = firebase.auth();
     </script>
+
+    <!-- Основной скрипт -->
+    <script src="script.js"></script>
 </body>
 </html>
