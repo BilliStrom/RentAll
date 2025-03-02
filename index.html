@@ -24,25 +24,29 @@
         </section>
     </main>
 
-    <!-- Подключение Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js"></script>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-    <!-- Инициализация Firebase -->
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCwkkASOyg-mpTtDenKWWpGn4mALQw9do4",
-            authDomain: "rentall-7cee4.firebaseapp.com",
-            projectId: "rentall-7cee4",
-            storageBucket: "rentall-7cee4.firebasestorage.app",
-            messagingSenderId: "789645270072",
-            appId: "1:789645270072:web:98941fe4892fa8cf5e5acd",
-            measurementId: "G-FLTXL7KCP4"
-        };
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-    </script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwkkASOyg-mpTtDenKWWpGn4mALQw9do4",
+    authDomain: "rentall-7cee4.firebaseapp.com",
+    projectId: "rentall-7cee4",
+    storageBucket: "rentall-7cee4.firebasestorage.app",
+    messagingSenderId: "789645270072",
+    appId: "1:789645270072:web:98941fe4892fa8cf5e5acd",
+    measurementId: "G-FLTXL7KCP4"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 
     <!-- Основной скрипт -->
     <script src="script.js"></script>
