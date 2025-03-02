@@ -25,6 +25,24 @@ const loadItems = async () => {
     }
 };
 
+const rentItem = async (itemId) => {
+    if (!auth.currentUser) {
+        alert('Пожалуйста, войдите в систему, чтобы арендовать товар.');
+        window.location.href = 'login.html';
+        return;
+    }
+    try {
+        await db.collection('bookings').add({
+            userId: auth.currentUser.uid,
+            itemId: itemId,
+            date: new Date().toISOString(),
+        });
+        alert('Товар успешно арендован!');
+    } catch (error) {
+        alert('Ошибка: ' + error.message);
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Страница загружена'); // Отладка
     loadItems();
