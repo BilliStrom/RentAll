@@ -24,12 +24,22 @@
         </section>
     </main>
 
-    <!-- Подключение Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"></script>
-    <script src="firebase.js"></script>
     <script>
-        // Загрузка данных из Firestore
+        const firebaseConfig = {
+  apiKey: "AIzaSyCwkkASOyg-mpTtDenKWWpGn4mALQw9do4",
+  authDomain: "rentall-7cee4.firebaseapp.com",
+  projectId: "rentall-7cee4",
+  storageBucket: "rentall-7cee4.firebasestorage.app",
+  messagingSenderId: "789645270072",
+  appId: "1:789645270072:web:98941fe4892fa8cf5e5acd",
+  measurementId: "G-FLTXL7KCP4"
+};
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
         const loadItems = async () => {
             const itemsGrid = document.querySelector('.items-grid');
             console.log('Загрузка данных...'); // Отладка
@@ -57,30 +67,10 @@
             }
         };
 
-        // Загрузка данных при загрузке страницы
         document.addEventListener('DOMContentLoaded', () => {
             console.log('Страница загружена'); // Отладка
             loadItems();
         });
-
-        // Функция аренды товара
-        window.rentItem = async (itemId) => {
-            if (!auth.currentUser) {
-                alert('Пожалуйста, войдите в систему, чтобы арендовать товар.');
-                window.location.href = 'login.html';
-                return;
-            }
-            try {
-                await db.collection('bookings').add({
-                    userId: auth.currentUser.uid,
-                    itemId: itemId,
-                    date: new Date().toISOString(),
-                });
-                alert('Товар успешно арендован!');
-            } catch (error) {
-                alert('Ошибка: ' + error.message);
-            }
-        };
     </script>
 </body>
 </html>
