@@ -44,8 +44,9 @@
   };
 
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+  const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore(); // Инициализация Firestore
+        const auth = firebase.auth(); // Инициализация аутентификации
 </script>
 
     <!-- Основной скрипт -->
