@@ -24,28 +24,6 @@
         </section>
     </main>
 
-    async function loadItems() {
-        try {
-          const querySnapshot = await getDocs(collection(db, "items"));
-          const itemsGrid = document.querySelector(".items-grid");
-          itemsGrid.innerHTML = ""; // Очистка контейнера
-
-          querySnapshot.forEach((doc) => {
-            const item = doc.data();
-            const itemElement = document.createElement("div");
-            itemElement.classList.add("item-card");
-            itemElement.innerHTML = `
-              <h3>${item.name}</h3>
-              <p>${item.description}</p>
-              <p>Цена: ${item.price} руб.</p>
-            `;
-            itemsGrid.appendChild(itemElement);
-          });
-        } catch (error) {
-          console.error("Ошибка загрузки данных:", error);
-        }
-      }
-
     <!-- Подключение Firebase -->
     <script type="module" src="firebase.js"></script>
     
