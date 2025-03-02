@@ -1,27 +1,36 @@
+import { db, auth, itemsCollection } from './firebase.js';
+import { getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+
 const loadItems = async () => {
     const itemsGrid = document.querySelector('.items-grid');
-    console.log('Загрузка данных...'); // Отладка
     try {
-        const querySnapshot = await db.collection('items').get();
-        console.log('Документы:', querySnapshot.docs); // Отладка
-        itemsGrid.innerHTML = ''; // Очищаем контейнер перед загрузкой
+        const querySnapshot = await getDocs(itemsCollection);
+        itemsGrid.innerHTML = '';
+        
         querySnapshot.forEach(doc => {
             const item = doc.data();
-            console.log('Товар:', item); // Проверьте структуру объекта item
             itemsGrid.innerHTML += `
                 <article class="item-card">
-                    <img src="${item.image || 'https://via.placeholder.com/150'}" alt="${item.title || 'Без названия'}" class="item-image">
+                    <img src="${item.image || 'https://via.placeholder.com/300'}" 
+                         alt="${item.title}" 
+                         class="item-image"
+                         onerror="this.src='https://via.placeholder.com/300'">
                     <div class="item-info">
-                        <h3>${item.title || 'Без названия'}</h3>
-                        <p class="price">${item.price || 'Цена не указана'} руб/день</p>
-                        <p>${item.description || 'Описание отсутствует'}</p>
-                        <button class="btn btn-primary" onclick="rentItem('${doc.id}')">Арендовать</button>
+                        <h3>${item.title}</h3>
+                        <p class="price">${item.price ?? 'Цена не указана'} руб/день</p>
+                        <p>${item.description || ''}</p>
+                        <button class="btn btn-primary" data-id="${doc.id}">Арендовать</button>
                     </div>
                 </article>
             `;
         });
+
+        // Добавляем обработчики событий после рендеринга
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+            btn.addEventListener('click', () => rentItem(btn.dataset.id));
+        });
     } catch (error) {
-        console.error('Ошибка загрузки данных:', error); // Отладка
+        console.error('Ошибка загрузки данных:', error);
     }
 };
 
@@ -31,10 +40,11 @@ const rentItem = async (itemId) => {
         window.location.href = 'login.html';
         return;
     }
+    
     try {
-        await db.collection('bookings').add({
+        await addDoc(collection(db, "bookings"), {
             userId: auth.currentUser.uid,
-            itemId: itemId,
+            itemId,
             date: new Date().toISOString(),
         });
         alert('Товар успешно арендован!');
@@ -43,7 +53,7 @@ const rentItem = async (itemId) => {
     }
 };
 
+// Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Страница загружена'); // Отладка
     loadItems();
 });
