@@ -18,152 +18,23 @@
         </nav>
     </header>
 
-    <!-- Кнопка добавления -->
-<button class="add-button" id="addBtn">+</button>
+    <button class="add-button" id="addBtn">+</button>
 
-<!-- Для регистрации -->
-<div id="registerError" class="error-message"></div>
-
-<!-- Для восстановления пароля -->
-<div id="resetError" class="error-message"></div>
-    
-<!-- Модальное окно -->
-<div id="addModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Новое объявление</h2>
-    <form id="addForm">
-      <div class="form-group">
-        <label>Название:</label>
-        <input type="text" id="adTitle" required>
-      </div>
-
-<div class="filters">
-  <div class="filter-group">
-    <select id="regionFilter" class="form-control">
-      <option value="">Все регионы</option>
-      <option>Московская область</option>
-      <option>Ленинградская область</option>
-    </select>
-  </div>
-</div>
-        
-      <div class="form-group">
-        <label>Описание:</label>
-        <textarea id="adDescription" rows="4" required></textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Цена за день (₽):</label>
-        <input type="number" id="adPrice" required>
-      </div>
-
-      <div class="form-group">
-        <label>Регион:</label>
-        <select id="adRegion" required>
-          <option value="">Выберите регион</option>
-          <option>Московская область</option>
-          <option>Ленинградская область</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Город:</label>
-        <input type="text" id="adCity" required>
-      </div>
-
-      <div class="form-group">
-        <label>Улица:</label>
-        <input type="text" id="adStreet">
-      </div>
-
-      <div class="form-group">
-        <label>Фотографии:</label>
-        <input type="file" id="adPhotos" multiple accept="image/*">
-      </div>
-
-      <div class="form-group switch">
-        <label>
-          Возможен выкуп:
-          <input type="checkbox" id="adBuyable">
-          <span class="slider"></span>
-        </label>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Опубликовать</button>
-    </form>
-  </div>
-</div>
-    <!-- Модальное окно -->
-<div id="addModal" class="modal" style="display: none;">
-  <h2>Разместить объявление</h2>
-  <form id="addForm">
-    <div class="form-group">
-      <label>Название товара</label>
-      <input type="text" id="title" required>
-    </div>
-    
-    <div class="form-group">
-      <label>Описание</label>
-      <textarea id="description" rows="3" required></textarea>
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Новое объявление</h2>
+            <form id="addForm">
+                <!-- ваши поля формы -->
+            </form>
+        </div>
     </div>
 
-    <div class="form-group">
-      <label>Цена за день (руб.)</label>
-      <input type="number" id="price" required>
-    </div>
-
-    <div class="form-group">
-      <label>Фотография</label>
-      <input type="file" id="image" accept="image/*">
-    </div>
-
-    <button type="submit">Опубликовать</button>
-  </form>
-</div>
-    <div class="item-status">
-  <span>⭐ Премиум</span>
-</div>
-    <div class="filters">
-  <div class="filter-group">
-    <select class="filter-select">
-      <option>Все категории</option>
-      <option>Электроника</option>
-      <option>Одежда</option>
-    </select>
-  </div>
-  <div class="filter-group">
-    <input type="text" placeholder="Поиск по объявлениям">
-  </div>
-</div>
     <main>
         <section class="items-grid">
-            <!-- Карточки товаров будут загружены через JavaScript -->
+            <!-- Карточки товаров -->
         </section>
     </main>
 
-    <div class="sorting">
-  Сортировать по: 
-  <select class="sort-select">
-    <option>Дате публикации</option>
-    <option>Цене (дешевые сначала)</option>
-    <option>Цене (дорогие сначала)</option>
-  </select>
-</div>
-    <!-- Подключение Firebase -->
-   <script type="module" src="firebase.js"></script>
-<script type="module" src="auth.js"></script>
-<script type="module" src="main.js"></script>
-    
-    <!-- Основной скрипт -->
-    <script type="module" src="script.js"></script>
-<div class="modal-overlay" id="modalOverlay" style="display: none;">
-  <div class="modal">
-    <h2>Подать объявление</h2>
-    <form id="addForm">
-</form>
-    <button class="btn-close">×</button>
-  </div>
-</div>
-    </body>
-</html>
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="auth.js"></script
