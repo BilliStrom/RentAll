@@ -1,5 +1,16 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
 import { 
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+  signOut,
+  onAuthStateChanged, // Импорт добавлен 1 раз
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+import { 
   getFirestore, 
   collection, 
   getDocs, 
@@ -7,18 +18,6 @@ import {
   query, 
   orderBy 
 } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
-import { 
-  getAuth,
-  onAuthStateChanged,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithRedirect,
-  signOut,
-  onAuthStateChanged,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail  // Добавлено
-} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 import { 
   getStorage, 
   ref, 
