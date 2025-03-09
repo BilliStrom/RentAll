@@ -2,7 +2,10 @@ import { initAuth } from './auth.js';
 import { db, collection, getDocs, query, orderBy } from './firebase.js';
 
 // Инициализация авторизации
-initAuth();
+document.addEventListener('DOMContentLoaded', () => {
+    initAuth();
+    initMobileMenu();
+});
 
 // Загрузка товаров
 document.addEventListener('DOMContentLoaded', async () => {
