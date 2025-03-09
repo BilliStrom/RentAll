@@ -22,6 +22,41 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
 import { signInWithRedirect } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
+// Было
+const updateUI = (user) => {
+  const authLinks = document.querySelector('.nav-links');
+  // ... остальной код
+};
+
+// Стало
+document.addEventListener('DOMContentLoaded', () => {
+  const updateUI = (user) => {
+    const authLinks = document.querySelector('.nav-links');
+    
+    if (!authLinks) {
+      console.log('Элемент .nav-links не найден на этой странице');
+      return;
+    }
+
+    if (user) {
+      authLinks.innerHTML = `
+        <li><a href="dashboard.html">${user.displayName}</a></li>
+        <li><a href="#" id="logout">Выйти</a></li>
+      `;
+    } else {
+      authLinks.innerHTML = `
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="#" id="login">Войти</a></li>
+      `;
+    }
+  };
+
+  // Инициализация авторизации
+  onAuthStateChanged(auth, (user) => {
+    updateUI(user);
+  });
+});
+
 document.getElementById('loginBtn').addEventListener('click', () => {
   signInWithRedirect(auth, provider);
 });
