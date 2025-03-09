@@ -31,33 +31,33 @@ if (window.location.pathname.includes('login.html')) {
 
 // Функция загрузки товаров
 const loadItems = async () => {
+  const itemsGrid = document.querySelector('.items-grid');
+  
+  if (!itemsGrid) {
+    console.error('Ошибка: элемент с классом "items-grid" не найден');
+    return;
+  }
+
   try {
-    const itemsCollection = collection(db, "items");
-    const q = query(itemsCollection, orderBy("createdAt", "desc"));
-    const querySnapshot = await getDocs(q);
-    
-    const itemsGrid = document.querySelector('.items-grid');
-    itemsGrid.innerHTML = '';
-    
+    const querySnapshot = await getDocs(collection(db, "items"));
+    itemsGrid.innerHTML = ''; // Теперь безопасно
+
     querySnapshot.forEach(doc => {
       const item = doc.data();
       itemsGrid.innerHTML += `
         <div class="item-card">
-          <img src="${item.image}" alt="${item.title}">
           <h3>${item.title}</h3>
-          <p class="price">${item.price} руб/день</p>
-          <p>${item.description}</p>
+          <p>Цена: ${item.price} руб/день</p>
         </div>
       `;
     });
-    
   } catch (error) {
     console.error('Ошибка загрузки:', error);
-    alert('Ошибка загрузки данных. Проверьте консоль для подробностей.');
+    itemsGrid.innerHTML = '<p>Не удалось загрузить товары</p>';
   }
 };
 
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', () => {
+// Запуск после полной загрузки страницы
+window.addEventListener('DOMContentLoaded', () => {
   loadItems();
 });
