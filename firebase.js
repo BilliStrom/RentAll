@@ -1,6 +1,15 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
-import { getFirestore, collection } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+import { 
+  getFirestore, collection, getDocs, addDoc, 
+  query, where, orderBy 
+} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+import { 
+  getAuth, signInWithPopup, GoogleAuthProvider, 
+  signOut, onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+import { 
+  getStorage, ref, uploadBytes, getDownloadURL 
+} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCwkkASOyg-mpTtDenKWWpGn4mALQw9do4",
@@ -10,41 +19,22 @@ const firebaseConfig = {
     messagingSenderId: "789645270072",
     appId: "1:789645270072:web:98941fe4892fa8cf5e5acd",
     measurementId: "G-FLTXL7KCP4"
-};
 
-export const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
-export const auth = getAuth(app);
-export const itemsCollection = collection(db, "items");
-
-import { 
-  signInWithPopup, 
-  GoogleAuthProvider, 
-  signOut,
-  onAuthStateChanged 
-} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
-
-// Инициализация провайдера Google
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const storage = getStorage(app);
 const provider = new GoogleAuthProvider();
 
-// Функции авторизации
-export const signInWithGoogle = async () => {
-  try {
-    await signInWithPopup(auth, provider);
-  } catch (error) {
-    console.error("Ошибка авторизации:", error);
-  }
+// Экспортируемые функции
+export { 
+  db, auth, storage, provider,
+  signInWithPopup, signOut, 
+  getDocs, addDoc, collection,
+  ref, uploadBytes, getDownloadURL,
+  query, where, orderBy 
 };
 
-export const logout = async () => {
-  try {
-    await signOut(auth);
-  } catch (error) {
-    console.error("Ошибка выхода:", error);
-  }
-};
-
-// Отслеживание состояния авторизации
 export const initAuth = (callback) => {
   onAuthStateChanged(auth, (user) => {
     callback(user);
@@ -52,16 +42,17 @@ export const initAuth = (callback) => {
   });
 };
 
-// Обновление интерфейса
 const updateUI = (user) => {
-  const authLinks = document.querySelector('.auth-links');
+  const navLinks = document.querySelector('.nav-links');
   if (user) {
-    authLinks.innerHTML = `
+    navLinks.innerHTML = `
+      <li><a href="dashboard.html">Мои объявления</a></li>
       <li><a href="#" id="logout">Выйти</a></li>
-      <li><a href="dashboard.html">${user.displayName}</a></li>
+      <li class="user-avatar"><img src="${user.photoURL}" alt="Аватар"></li>
     `;
   } else {
-    authLinks.innerHTML = `
+    navLinks.innerHTML = `
+      <li><a href="index.html">Главная</a></li>
       <li><a href="#" id="login">Войти</a></li>
     `;
   }
