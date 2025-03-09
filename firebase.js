@@ -15,7 +15,8 @@ import {
   signOut,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail  // Добавлено
 } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 import { 
   getStorage, 
@@ -34,40 +35,32 @@ const firebaseConfig = {
   measurementId: "G-FLTXL7KCP4"
 };
 
-// Инициализация Firebase
 const app = initializeApp(firebaseConfig);
 
-// Инициализация сервисов
-const db = getFirestore(app);
-const auth = getAuth(app);
-const storage = getStorage(app);
-const provider = new GoogleAuthProvider();
+export const db = getFirestore(app);
+export const auth = getAuth(app);
+export const storage = getStorage(app);
+export const provider = new GoogleAuthProvider();
 
-// Экспорт сервисов и методов
+// Экспорт методов
 export {
-  // Сервисы
-  db,
-  auth,
-  storage,
-  provider,
-  
-  // Firestore методы
+  // Firestore
   query,
   orderBy,
   collection,
   getDocs,
   addDoc,
 
-  // Auth методы
+  // Auth
   signInWithPopup,
   signInWithRedirect,
   signOut,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  sendPasswordResetEmail,
+  sendPasswordResetEmail,  // Добавлено в экспорт
 
-  // Storage методы
+  // Storage
   ref,
   uploadBytes,
   getDownloadURL
