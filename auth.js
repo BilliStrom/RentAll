@@ -1,14 +1,13 @@
-// Импорты в начале файла
 import { 
-  auth,
+  auth, 
   onAuthStateChanged,
   createUserWithEmailAndPassword,
-  sendPasswordResetEmail
+  signInWithEmailAndPassword,
+  signOut
 } from './firebase.js';
 
-// Экспорт функции инициализации авторизации
+// Инициализация авторизации
 export const initAuth = () => {
-  onAuthStateChanged(auth, (user) => {
   const updateUI = (user) => {
     const navLinks = document.querySelector('.nav-links');
     if (!navLinks) return;
@@ -22,6 +21,7 @@ export const initAuth = () => {
     `;
   };
 
+  // Исправленный вызов (добавлены пропущенные скобки)
   onAuthStateChanged(auth, (user) => {
     updateUI(user);
     initMobileMenu();
