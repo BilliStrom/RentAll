@@ -40,6 +40,41 @@
   font-size: 14px;
 }
 
+/* Добавить в style.css */
+.loader {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.user-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column;
+    position: fixed;
+    top: 60px;
+    right: -100%;
+    transition: 0.3s;
+  }
+  
+  .nav-links.active {
+    right: 0;
+  }
+}
 /* Статус объявления */
 .item-status {
   background: #FFEECC;
