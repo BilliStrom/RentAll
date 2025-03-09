@@ -8,12 +8,14 @@ import {
   orderBy 
 } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 import { 
-  getAuth, 
-  signInWithPopup, 
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
   signInWithRedirect,
-  GoogleAuthProvider, 
-  signOut, 
-  onAuthStateChanged 
+  signOut,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 import { 
   getStorage, 
@@ -21,10 +23,7 @@ import {
   uploadBytes, 
   getDownloadURL 
 } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
-import { 
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCwkkASOyg-mpTtDenKWWpGn4mALQw9do4",
   authDomain: "rentall-7cee4.firebaseapp.com",
@@ -38,26 +37,37 @@ const firebaseConfig = {
 // Инициализация Firebase
 const app = initializeApp(firebaseConfig);
 
-// Экспорт сервисов
-export const db = getFirestore(app);
-export const auth = getAuth(app);
-export const storage = getStorage(app);
-export const provider = new GoogleAuthProvider();
+// Инициализация сервисов
+const db = getFirestore(app);
+const auth = getAuth(app);
+const storage = getStorage(app);
+const provider = new GoogleAuthProvider();
+
+// Экспорт сервисов и методов
 export {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
-// Экспорт методов
-export { 
-  query, 
+  // Сервисы
+  db,
+  auth,
+  storage,
+  provider,
+  
+  // Firestore методы
+  query,
   orderBy,
   collection,
   getDocs,
   addDoc,
+
+  // Auth методы
   signInWithPopup,
   signInWithRedirect,
   signOut,
   onAuthStateChanged,
-  ref, 
-  uploadBytes, 
-  getDownloadURL 
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+
+  // Storage методы
+  ref,
+  uploadBytes,
+  getDownloadURL
 };
