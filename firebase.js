@@ -1,9 +1,3 @@
-import { signInWithRedirect } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
-
-document.getElementById('loginBtn').addEventListener('click', () => {
-  signInWithRedirect(auth, provider);
-});
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
 import { 
   getFirestore, 
@@ -26,7 +20,11 @@ import {
   uploadBytes, 
   getDownloadURL 
 } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
+import { signInWithRedirect } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
+document.getElementById('loginBtn').addEventListener('click', () => {
+  signInWithRedirect(auth, provider);
+});
 const firebaseConfig = {
   apiKey: "AIzaSyCwkkASOyg-mpTtDenKWWpGn4mALQw9do4",
   authDomain: "rentall-7cee4.firebaseapp.com",
