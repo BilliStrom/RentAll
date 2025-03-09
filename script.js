@@ -53,6 +53,70 @@ const rentItem = async (itemId) => {
     }
 };
 
+// Инициализация
+let currentUser = null;
+
+initAuth((user) => {
+  currentUser = user;
+  document.getElementById('addBtn').style.display = user ? 'block' : 'none';
+});
+
+// Обработчики авторизации
+document.addEventListener('click', async (e) => {
+  if (e.target.id === 'login') {
+    await signInWithGoogle();
+  }
+  if (e.target.id === 'logout') {
+    await logout();
+  }
+});
+
+// Работа с объявлениями
+document.getElementById('addBtn').addEventListener('click', () => {
+  document.getElementById('addModal').style.display = 'block';
+});
+
+document.getElementById('addForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  if (!currentUser) {
+    alert('Требуется авторизация!');
+    return;
+  }
+
+  const title = document.getElementById('title').value;
+  const description = document.getElementById('description').value;
+  const price = Number(document.getElementById('price').value);
+  const imageFile = document.getElementById('image').files[0];
+
+  try {
+    // Загрузка изображения
+    let imageUrl = '';
+    if (imageFile) {
+      const storageRef = ref(storage, `items/${Date.now()}_${imageFile.name}`);
+      await uploadBytes(storageRef, imageFile);
+      imageUrl = await getDownloadURL(storageRef);
+    }
+
+    // Добавление документа
+    await addDoc(itemsCollection, {
+      title,
+      description,
+      price,
+      image: imageUrl,
+      userId: currentUser.uid,
+      createdAt: new Date().toISOString()
+    });
+
+    alert('Объявление успешно добавлено!');
+    loadItems();
+    document.getElementById('addModal').style.display = 'none';
+    document.getElementById('addForm').reset();
+    
+  } catch (error) {
+    alert('Ошибка: ' + error.message);
+  }
+});
 // Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', () => {
     loadItems();
