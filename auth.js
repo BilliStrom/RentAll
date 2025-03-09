@@ -6,6 +6,19 @@ import {
   signOut
 } from './firebase.js';
 
+// auth.js
+export const initMobileMenu = () => {
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    });
+  }
+};
+
 // Инициализация авторизации
 export const initAuth = () => {
   const updateUI = (user) => {
