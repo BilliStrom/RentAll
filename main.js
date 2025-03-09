@@ -8,8 +8,10 @@ initAuth();
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     const querySnapshot = await getDocs(
-      query(collection(db, "items"), 
-      orderBy("createdAt", "desc")
+      query(
+        collection(db, "items"), 
+        orderBy("createdAt", "desc")
+      ) // ← Добавлена закрывающая скобка для query
     );
     
     const itemsGrid = document.querySelector('.items-grid');
