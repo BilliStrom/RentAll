@@ -31,14 +31,18 @@ document.addEventListener('DOMContentLoaded', () => {
   loadItems();
 });
 
-// Загрузка товаров
 const loadItems = async () => {
   const loader = document.createElement('div');
   loader.className = 'loader';
   document.querySelector('.items-grid').append(loader);
 
   try {
-    const q = query(collection(db, "items"), orderBy("createdAt", "desc"));
+    // Правильное использование query с orderBy
+    const q = query(
+      collection(db, "items"), 
+      orderBy("createdAt", "desc")
+    );
+    
     const snapshot = await getDocs(q);
     
     const itemsHTML = snapshot.docs.map(doc => {
@@ -58,8 +62,10 @@ const loadItems = async () => {
     }).join('');
 
     document.querySelector('.items-grid').innerHTML = itemsHTML;
+
   } catch (error) {
     console.error('Ошибка загрузки:', error);
+    alert('Не удалось загрузить объявления');
   } finally {
     loader.remove();
   }
