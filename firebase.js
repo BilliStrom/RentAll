@@ -21,7 +21,10 @@ import {
   uploadBytes, 
   getDownloadURL 
 } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
-
+import { 
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 const firebaseConfig = {
   apiKey: "AIzaSyCwkkASOyg-mpTtDenKWWpGn4mALQw9do4",
   authDomain: "rentall-7cee4.firebaseapp.com",
@@ -40,7 +43,9 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
 export const provider = new GoogleAuthProvider();
-
+export {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
 // Экспорт методов
 export { 
   query, 
