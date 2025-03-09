@@ -1,4 +1,3 @@
-// Обработка формы регистрации
 const registerForm = document.getElementById('registerForm');
 if (registerForm) {
     registerForm.addEventListener('submit', async (e) => {
