@@ -6,6 +6,21 @@ if (registerForm) {
         const password = document.getElementById('registerPassword').value;
         const confirmPassword = document.getElementById('registerPasswordConfirm').value;
 
+        // Восстановление пароля
+const passwordResetForm = document.getElementById('passwordResetForm');
+if (passwordResetForm) {
+    passwordResetForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('resetEmail').value;
+        
+        try {
+            await sendPasswordResetEmail(auth, email);
+            showError('resetError', 'Письмо с инструкциями отправлено на ваш email', 'success');
+        } catch (error) {
+            showError('resetError', 'Ошибка: ' + error.message);
+        }
+    });
+}
         // Валидация паролей
         if (password !== confirmPassword) {
             return showError('registerError', 'Пароли не совпадают');
