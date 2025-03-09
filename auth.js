@@ -1,12 +1,14 @@
 // Импорты в начале файла
 import { 
   auth,
+  onAuthStateChanged,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail
 } from './firebase.js';
 
 // Экспорт функции инициализации авторизации
 export const initAuth = () => {
+  onAuthStateChanged(auth, (user) => {
   const updateUI = (user) => {
     const navLinks = document.querySelector('.nav-links');
     if (!navLinks) return;
