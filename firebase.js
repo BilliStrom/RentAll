@@ -22,12 +22,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
 import { signInWithRedirect } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
-// Было
-const updateUI = (user) => {
-  const authLinks = document.querySelector('.nav-links');
-  // ... остальной код
-};
-
 // Стало
 document.addEventListener('DOMContentLoaded', () => {
   const updateUI = (user) => {
