@@ -34,26 +34,34 @@ const loadItems = async () => {
   const itemsGrid = document.querySelector('.items-grid');
   
   if (!itemsGrid) {
-    console.error('Ошибка: элемент с классом "items-grid" не найден');
+    console.error('Элемент .items-grid не найден');
     return;
   }
 
   try {
     const querySnapshot = await getDocs(collection(db, "items"));
-    itemsGrid.innerHTML = ''; // Теперь безопасно
+    itemsGrid.innerHTML = '';
 
     querySnapshot.forEach(doc => {
       const item = doc.data();
       itemsGrid.innerHTML += `
         <div class="item-card">
-          <h3>${item.title}</h3>
-          <p>Цена: ${item.price} руб/день</p>
+          <img src="${item.image}" 
+               alt="${item.title || 'Изображение товара'}"
+               class="item-image"
+               onerror="this.src='https://via.placeholder.com/300x200'">
+          <div class="item-info">
+            <h3>${item.title || 'Без названия'}</h3>
+            <p class="price">${item.price ? item.price + ' руб/день' : 'Цена не указана'}</p>
+            <p>${item.description || ''}</p>
+          </div>
         </div>
       `;
     });
+
   } catch (error) {
     console.error('Ошибка загрузки:', error);
-    itemsGrid.innerHTML = '<p>Не удалось загрузить товары</p>';
+    itemsGrid.innerHTML = '<p>Не удалось загрузить объявления</p>';
   }
 };
 
