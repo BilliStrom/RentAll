@@ -17,6 +17,18 @@ import {
 // Инициализация состояния
 let currentUser = null;
 
+// Для страницы login.html
+if (window.location.pathname.includes('login.html')) {
+  document.getElementById('googleLogin').addEventListener('click', async () => {
+    try {
+      await signInWithPopup(auth, provider);
+      window.location.href = 'index.html'; // Перенаправление после входа
+    } catch (error) {
+      alert('Ошибка входа: ' + error.message);
+    }
+  });
+}
+
 // Функция загрузки товаров
 const loadItems = async () => {
   try {
