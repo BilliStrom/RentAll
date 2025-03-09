@@ -1,66 +1,42 @@
-import { 
-  auth, 
-  provider, 
-  onAuthStateChanged,
-  signInWithPopup,
-  signInWithRedirect,
-  signOut 
-} from './firebase.js';
+const registerForm = document.getElementById('registerForm');
+if (registerForm) {
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+        const confirmPassword = document.getElementById('registerPasswordConfirm').value;
 
-// В файле auth.js
-export const initAuth = () => {
-  const updateUI = (user) => {
-    const navLinks = document.getElementById('navLinks');
-    if (!navLinks) return;
-
-    navLinks.innerHTML = user ? `
-      <li><a href="index.html">Главная</a></li>
-      <li><a href="dashboard.html">Личный кабинет</a></li>
-      <li><a href="#" id="logout">Выйти</a></li>
-    ` : `
-      <li><a href="index.html">Главная</a></li>
-      <li><a href="#" id="login">Войти</a></li>
-      <li><a href="register.html">Регистрация</a></li>
-    `;
-  };
-
-  onAuthStateChanged(auth, (user) => {
-    updateUI(user);
-    initMobileMenu();
-  });
-};
-
-const initMobileMenu = () => {
-  const hamburger = document.getElementById('hamburger');
-  const navLinks = document.getElementById('navLinks');
-
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
-  }
-};
-
-    // Обработчики событий
-    document.addEventListener('click', async (e) => {
-      if (e.target.id === 'login') {
-        try {
-          await signInWithPopup(auth, provider);
-        } catch (error) {
-          if (error.code === 'auth/popup-blocked') {
-            await signInWithRedirect(auth, provider);
-          }
+        // Валидация паролей
+        if (password !== confirmPassword) {
+            return showError('registerError', 'Пароли не совпадают');
         }
-      }
-      
-      if (e.target.id === 'logout') {
-        await signOut(auth);
-      }
-    });
 
-    // Следим за состоянием аутентификации
-    onAuthStateChanged(auth, (user) => {
-      updateUI(user);
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            window.location.href = './dashboard.html';
+        } catch (error) {
+            // Обработка конкретных ошибок
+            switch (error.code) {
+                case 'auth/email-already-in-use':
+                    showError(
+                        'registerError', 
+                        'Этот email уже зарегистрирован. ' +
+                        '<a href="login.html" class="error-link">Войти?</a> ' +
+                        '<a href="password-reset.html" class="error-link">Забыли пароль?</a>'
+                    );
+                    break;
+                
+                case 'auth/invalid-email':
+                    showError('registerError', 'Неверный формат email');
+                    break;
+                    
+                case 'auth/weak-password':
+                    showError('registerError', 'Пароль должен содержать минимум 6 символов');
+                    break;
+                    
+                default:
+                    showError('registerError', 'Ошибка регистрации: ' + error.message);
+            }
+        }
     });
-  });
-};
+}
