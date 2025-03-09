@@ -1,10 +1,10 @@
-import { initAuth } from './auth.js';
+import { initAuth, initMobileMenu } from './auth.js'; // Добавлен импорт
 import { db, collection, getDocs, query, orderBy } from './firebase.js';
 
 // Инициализация авторизации
 document.addEventListener('DOMContentLoaded', () => {
-    initAuth();
-    initMobileMenu();
+  initAuth();
+  initMobileMenu(); // Теперь функция доступна
 });
 
 // Загрузка товаров
