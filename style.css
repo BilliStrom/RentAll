@@ -1,3 +1,34 @@
+/* Фильтры как на Авито */
+.filters {
+  background: white;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.filter-group {
+  margin-right: 24px;
+  display: inline-block;
+}
+
+/* Хлебные крошки */
+.breadcrumbs {
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+/* Статус объявления */
+.item-status {
+  background: #FFEECC;
+  color: #996600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
 /* Цветовая схема как на Авито */
 :root {
   --primary-blue: #005BFF;
