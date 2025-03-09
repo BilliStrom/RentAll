@@ -10,6 +10,7 @@ import {
 import { 
   getAuth, 
   signInWithPopup, 
+  signInWithRedirect,
   GoogleAuthProvider, 
   signOut, 
   onAuthStateChanged 
@@ -20,40 +21,7 @@ import {
   uploadBytes, 
   getDownloadURL 
 } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
-import { signInWithRedirect } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
-// Стало
-document.addEventListener('DOMContentLoaded', () => {
-  const updateUI = (user) => {
-    const authLinks = document.querySelector('.nav-links');
-    
-    if (!authLinks) {
-      console.log('Элемент .nav-links не найден на этой странице');
-      return;
-    }
-
-    if (user) {
-      authLinks.innerHTML = `
-        <li><a href="dashboard.html">${user.displayName}</a></li>
-        <li><a href="#" id="logout">Выйти</a></li>
-      `;
-    } else {
-      authLinks.innerHTML = `
-        <li><a href="index.html">Главная</a></li>
-        <li><a href="#" id="login">Войти</a></li>
-      `;
-    }
-  };
-
-  // Инициализация авторизации
-  onAuthStateChanged(auth, (user) => {
-    updateUI(user);
-  });
-});
-
-document.getElementById('loginBtn').addEventListener('click', () => {
-  signInWithRedirect(auth, provider);
-});
 const firebaseConfig = {
   apiKey: "AIzaSyCwkkASOyg-mpTtDenKWWpGn4mALQw9do4",
   authDomain: "rentall-7cee4.firebaseapp.com",
@@ -64,14 +32,16 @@ const firebaseConfig = {
   measurementId: "G-FLTXL7KCP4"
 };
 
+// Инициализация Firebase
 const app = initializeApp(firebaseConfig);
 
+// Экспорт сервисов
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
 export const provider = new GoogleAuthProvider();
 
-// Явно экспортируем все необходимые методы
+// Экспорт методов
 export { 
   query, 
   orderBy,
@@ -79,6 +49,7 @@ export {
   getDocs,
   addDoc,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
   onAuthStateChanged,
   ref, 
