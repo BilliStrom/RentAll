@@ -1,3 +1,9 @@
+import { signInWithRedirect } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+
+document.getElementById('loginBtn').addEventListener('click', () => {
+  signInWithRedirect(auth, provider);
+});
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
 import { 
   getFirestore, 
