@@ -89,9 +89,9 @@ const handleRegistrationError = (error) => {
       break;
     default:
       showError('registerError', 'Ошибка регистрации: ' + error.message);
-  }
-};
-
+   }
+ });
+}
 // Обработка восстановления пароля (отдельный блок)
 const passwordResetForm = document.getElementById('passwordResetForm');
 if (passwordResetForm) {
@@ -116,6 +116,7 @@ const showError = (elementId, message, type = 'error') => {
     errorElement.className = `error-message ${type}`;
     errorElement.style.display = 'block';
     setTimeout(() => errorElement.style.display = 'none', 5000);
-  }
-};
+ }
+  });
+}
 
