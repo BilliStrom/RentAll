@@ -1,122 +1,43 @@
-import { 
-  auth, 
-  onAuthStateChanged,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut
-} from './firebase.js';
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentAll - Вход</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <h1>RentAll</h1>
+                <ul class="nav-links" id="navLinks"></ul>
+            </div>
+        </nav>
+    </header>
 
-// auth.js
-export const initMobileMenu = () => {
-  const hamburger = document.getElementById('hamburger');
-  const navLinks = document.getElementById('navLinks');
+    <main>
+        <div class="auth-container">
+            <form id="loginForm" class="auth-form">
+                <h2>Вход</h2>
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Пароль" required>
+                <div id="loginError" class="error-message"></div>
+                <button type="submit">Войти</button>
+                <p>Нет аккаунта? <a href="register.html">Зарегистрируйтесь</a></p>
+            </form>
+        </div>
+    </main>
 
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-      hamburger.classList.toggle('active');
-    });
-  }
-};
-
-// Инициализация авторизации
-export const initAuth = () => {
-  const updateUI = (user) => {
-    const navLinks = document.querySelector('.nav-links');
-    if (!navLinks) return;
-
-    navLinks.innerHTML = user ? `
-      <li><a href="dashboard.html">Личный кабинет</a></li>
-      <li><a href="#" id="logout">Выйти</a></li>
-    ` : `
-      <li><a href="login.html">Войти</a></li>
-      <li><a href="register.html">Регистрация</a></li>
-    `;
-  };
-
-  // Исправленный вызов (добавлены пропущенные скобки)
- onAuthStateChanged(auth, (user) => {
-  if (user) {
-    updateUI(user);
-    initMobileMenu();
-  } else {
-    updateUI(null);
-    if (window.location.pathname.includes('dashboard')) {
-      window.location.href = 'login.html';
-    }
-  }
-});
-
-// Обработка формы регистрации
-const registerForm = document.getElementById('registerForm');
-if (registerForm) {
-  registerForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('registerEmail').value;
-    const password = document.getElementById('registerPassword').value;
-    const confirmPassword = document.getElementById('registerPasswordConfirm').value;
-
-    // Валидация паролей
-    if (password !== confirmPassword) {
-      return showError('registerError', 'Пароли не совпадают');
-    }
-
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      window.location.href = './dashboard.html';
-    } catch (error) {
-      handleRegistrationError(error);
-    }
-  });
-}
-
-// Обработка ошибок регистрации
-const handleRegistrationError = (error) => {
-  switch (error.code) {
-    case 'auth/email-already-in-use':
-      showError(
-        'registerError', 
-        'Этот email уже зарегистрирован. ' +
-        '<a href="login.html" class="error-link">Войти?</a> ' +
-        '<a href="password-reset.html" class="error-link">Забыли пароль?</a>'
-      );
-      break;
-    case 'auth/invalid-email':
-      showError('registerError', 'Неверный формат email');
-      break;
-    case 'auth/weak-password':
-      showError('registerError', 'Пароль должен содержать минимум 6 символов');
-      break;
-    default:
-      showError('registerError', 'Ошибка регистрации: ' + error.message);
-   }
- });
-}
-// Обработка восстановления пароля (отдельный блок)
-const passwordResetForm = document.getElementById('passwordResetForm');
-if (passwordResetForm) {
-  passwordResetForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('resetEmail').value;
-    
-    try {
-      await sendPasswordResetEmail(auth, email);
-      showError('resetError', 'Письмо с инструкциями отправлено на ваш email', 'success');
-    } catch (error) {
-      showError('resetError', 'Ошибка: ' + error.message);
-    }
-  });
-}
-
-// Функция отображения ошибок
-const showError = (elementId, message, type = 'error') => {
-  const errorElement = document.getElementById(elementId);
-  if (errorElement) {
-    errorElement.innerHTML = message;
-    errorElement.className = `error-message ${type}`;
-    errorElement.style.display = 'block';
-    setTimeout(() => errorElement.style.display = 'none', 5000);
- }
-  });
-}
-
+    <script type="module">
+        import { handleLogin } from './auth.js';
+        
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            await handleLogin(email, password);
+        });
+    </script>
+</body>
+</html>
