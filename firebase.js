@@ -2,70 +2,43 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebas
 import { 
   getAuth,
   GoogleAuthProvider,
-  signInWithPopup,
-  signInWithRedirect,
-  signOut,
-  onAuthStateChanged, // Импорт добавлен 1 раз
+  onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 import { 
-  getFirestore, 
-  collection, 
-  getDocs, 
-  addDoc,
-  query, 
-  orderBy 
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
-import { 
-  getStorage, 
-  ref, 
-  uploadBytes, 
-  getDownloadURL 
-} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCwkkASOyg-mpTtDenKWWpGn4mALQw9do4",
   authDomain: "rentall-7cee4.firebaseapp.com",
   projectId: "rentall-7cee4",
-  storageBucket: "rentall-7cee4.firebasestorage.app",
+  storageBucket: "rentall-7cee4.appspot.com",
   messagingSenderId: "789645270072",
-  appId: "1:789645270072:web:98941fe4892fa8cf5e5acd",
-  measurementId: "G-FLTXL7KCP4"
+  appId: "1:789645270072:web:98941fe4892fa8cf5e5acd"
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-export const db = getFirestore(app);
-export const auth = getAuth(app);
-export const storage = getStorage(app);
-export const provider = new GoogleAuthProvider();
-
-import { enableIndexedDbPersistence } from "firebase/firestore"; 
-enableIndexedDbPersistence(db).catch((err) => {
-    console.error("Ошибка кэширования: ", err);
-});
-// Экспорт методов
-export {
-  // Firestore
-  query,
-  orderBy,
+export { 
+  auth, 
+  db,
   collection,
   getDocs,
-  addDoc,
-
-  // Auth
-  signInWithPopup,
-  signInWithRedirect,
-  signOut,
+  query,
+  where,
+  orderBy,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  sendPasswordResetEmail,  // Добавлено в экспорт
-
-  // Storage
-  ref,
-  uploadBytes,
-  getDownloadURL
+  sendPasswordResetEmail 
 };
