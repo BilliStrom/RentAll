@@ -113,7 +113,3 @@ const showError = (elementId, message, type = 'error') => {
   }
 };
 
-// Инициализация мобильного меню
-const initMobileMenu = () => {
-  // Реализация мобильного меню
-};
