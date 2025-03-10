@@ -1,6 +1,11 @@
 import { db, auth, collection, getDocs, query, where } from './firebase.js';
 
+// Добавьте проверку авторизации
 export const loadUserItems = async () => {
+    if (!auth.currentUser) {
+        window.location.href = './login.html';
+        return;
+    }
     try {
         const itemsCollection = collection(db, "items");
         const q = query(itemsCollection, where("userId", "==", auth.currentUser.uid));
