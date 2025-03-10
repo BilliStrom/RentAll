@@ -35,11 +35,17 @@ export const initAuth = () => {
   };
 
   // Исправленный вызов (добавлены пропущенные скобки)
-  onAuthStateChanged(auth, (user) => {
+ onAuthStateChanged(auth, (user) => {
+  if (user) {
     updateUI(user);
     initMobileMenu();
-  });
-};
+  } else {
+    updateUI(null);
+    if (window.location.pathname.includes('dashboard')) {
+      window.location.href = 'login.html';
+    }
+  }
+});
 
 // Обработка формы регистрации
 const registerForm = document.getElementById('registerForm');
